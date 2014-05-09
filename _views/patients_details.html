@@ -1,0 +1,334 @@
+	<div id="content" class="clearfix">
+            <div class="contentwrapper"><!--Content wrapper-->
+
+                <div class="heading">
+
+                    <h3>Patientenprofil</h3>                    
+
+                    <div class="resBtnSearch">
+                        <a href="#"><span class="icon16 icomoon-icon-search-3"></span></a>
+                    </div>
+                    
+                    <ul class="breadcrumb">
+                        <li>Sie befinden sich hier:</li>
+                        <li>
+                            <a href="#" class="tip" title="Zurück zu Dashboard">
+                                <span class="icon16 icomoon-icon-screen-2"></span>
+                            </a> 
+                            <span class="divider">
+                                <span class="icon16 icomoon-icon-arrow-right-3"></span>
+                            </span>
+                        </li>
+                        <li>
+                            <a href="/patients/" class="tip" title="Zurück zu Patienten">
+                                <span class="icon16 icomoon-icon-users"></span> Patienten
+                            </a> 
+                            <span class="divider">
+                                <span class="icon16 icomoon-icon-arrow-right-3"></span>
+                            </span>
+                        </li>
+                        <li class="active">Profil</li>
+                    </ul>
+
+                </div><!-- End .heading-->
+
+                <!-- Build page from here: -->
+                <div class="row">
+
+                    <div class="col-lg-6">
+						
+                        <div class="page-header">
+                            <h4>Profil von {{ patient.first_name }} {{ patient.name }} ({{ patient.MRN }})</h4>
+                        </div>
+                        
+                        <form id="userProfile" class="form-horizontal seperator" role="form">
+                        	<input type="hidden" id="id" name="id" type="text" value="{{ id }}" />
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label" for="prename">Vorname:</label>
+                                <div class="col-lg-10">
+                                    <p>{{ patient.first_name }}</p>
+                                </div>
+                            </div><!-- End .form-group  -->
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label" for="name">Nachname:</label>
+                                <div class="col-lg-10">
+                                    <p>{{ patient.name }}</p>
+                                </div>
+                            </div><!-- End .form-group  -->
+                            
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label" for="email">Geschlecht:</label>
+                                <div class="col-lg-10">
+                                    <p>{% if patient.gender == 1 %} <span class="icon icomoon-icon-male"></span> Mann {% else %} <span class="icon icomoon-icon-female"></span>Frau {% endif %}</p>
+                                </div>
+                            </div><!-- End .form-group  -->
+                            
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label" for="name">Geburtsdatum:</label>
+                                <div class="col-lg-10">
+                                    <p>{{ patient.birthdate|date("d.m.Y") }}</p>
+                                </div>
+                            </div><!-- End .form-group  -->
+                            
+
+                        </form>
+                      
+                    </div><!-- End .span6 -->
+                    
+                    <div class="col-lg-6">
+						
+                        <div class="page-header">
+                            <h4>Neue Werte erfassen</h4>
+                        </div>
+						
+						<div id="alertMessage" class="alert hide">
+							<button type="button" class="close" data-dismiss="alert">×</button>
+                            <p></p>
+                        </div>
+                        
+                        <ul id="myTab" class="nav nav-tabs">
+	                        <li class="active"><a href="#vital" data-toggle="tab">Vitalwerte</a></li>
+	                        <li><a href="#medikamente" data-toggle="tab">Medikamente</a></li>
+	                    </ul>
+	                    <div class="tab-content">
+	                        <div class="tab-pane fade in active" id="vital">
+	                            <form class="form-horizontal" role="form" id="vitalForm">
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label" for="sign">Typ</label>
+                                        <div class="col-lg-9">
+                                            <select name="sign" class="form-control">
+                                                {% for item in allSigns if item.signID != 3 %}
+                                                <option value="{{ item.signID }}">{{ item.sign_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div><!-- End .form-group  -->
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label" for="value">Wert</label>
+                                        <div class="col-lg-9">
+                                           <input type="number" id="value" name="value" class="form-control uniform-input text" required="required">
+                                        </div>
+                                    </div><!-- End .form-group  -->
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label" for="date">Datum</label>
+                                        <div class="col-lg-9">
+                                           <input type="text" id="date" name="date" class="form-control uniform-input text" placeholder="YYYY-MM-DD" value="{{ 'now'|date('Y-m-d') }}">
+                                           <span class="help-block blue">YYYY-MM-DD</span>
+                                        </div>
+                                    </div><!-- End .form-group  -->
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label" for="time">Zeit</label>
+                                        <div class="col-lg-9">
+                                           <input type="text" id="time" name="time" class="form-control uniform-input text" placeholder="HH:MM" value="{{ 'now'|date('H:i') }}">
+                                           <span class="help-block blue">HH:MM</span>
+                                        </div>
+                                    </div><!-- End .form-group  -->
+                                    <div class="form-group">
+                                            <label class="col-lg-3 control-label" for="note">Notiz</label>
+                                            <div class="col-lg-9">
+                                                <textarea id="note" name="note" rows="3" class="form-control uniform"></textarea>
+                                            </div>
+                                        </div>
+                                    <input type="hidden" name="patientId" value="{{ patient.patientID }}" >
+                                    <div class="form-group">
+	                                    <div class="col-lg-offset-3 col-lg-9">
+	                                        <button type="submit" class="btn btn-info">Speichern</button>
+	                                    </div>
+                                    </div><!-- End .form-group  -->
+                                </form>
+	                        </div>
+	                        <div class="tab-pane fade" id="medikamente">
+	                            <form class="form-horizontal" role="form" id="mediForm">
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label" for="medicament">Medikament</label>
+                                        <div class="col-lg-9">
+                                            <select name="medicament" class="form-control">
+                                            	{% for item in allMedis %}
+                                                <option value="{{ item.medicamentID }}">{{ item.medicament_name }} ({{ item.unit }})</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div><!-- End .form-group  -->
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label" for="quantity">Anzahl</label>
+                                        <div class="col-lg-9">
+                                           <input type="number" id="quantity" name="quantity" class="form-control uniform-input text" required="required">
+                                        </div>
+                                    </div><!-- End .form-group  -->
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label" for="date">Datum</label>
+                                        <div class="col-lg-9">
+                                           <input type="text" id="date" name="date" class="form-control uniform-input text" placeholder="YYYY-MM-DD" value="{{ 'now'|date('Y-m-d') }}">
+                                           <span class="help-block blue">YYYY-MM-DD</span>
+                                        </div>
+                                    </div><!-- End .form-group  -->
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label" for="time">Zeit</label>
+                                        <div class="col-lg-9">
+                                           <input type="text" id="time" name="time" class="form-control uniform-input text" placeholder="HH:MM" value="{{ 'now'|date('H:i') }}">
+                                           <span class="help-block blue">HH:MM</span>
+                                        </div>
+                                    </div><!-- End .form-group  -->
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label" for="nurse">Pfleger</label>
+                                        <div class="col-lg-9">
+                                            <select name="nurse" class="form-control">
+                                                {% for item in allNurses %}
+                                                <option value="{{ item.staffID }}">{{ item.first_name }} {{ item.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div><!-- End .form-group  -->
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label" for="physician">Arzt</label>
+                                        <div class="col-lg-9">
+                                            <select name="physician" class="form-control">
+                                                {% for item in allPhysicians %}
+                                                <option value="{{ item.staffID }}">{{ item.first_name }}  {{ item.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div><!-- End .form-group  -->
+                                    <div class="form-group">
+                                            <label class="col-lg-3 control-label" for="note">Notiz</label>
+                                            <div class="col-lg-9">
+                                                <textarea id="note" name="note" rows="3" class="form-control uniform"></textarea>
+                                            </div>
+                                        </div>
+                                    <input type="hidden" name="patientId" value="{{ patient.patientID }}" >
+                                    <div class="form-group">
+	                                    <div class="col-lg-offset-3 col-lg-9">
+	                                        <button type="submit" class="btn btn-info">Speichern</button>
+	                                    </div>
+                                    </div><!-- End .form-group  -->
+                                </form>
+	                        </div>
+	                    </div>
+                      
+                    </div><!-- End .span6 -->
+
+                </div><!-- End .row -->
+                
+                <div class="row">
+
+                        <div class="col-lg-6">                            
+                            <div class="panel panel-default">
+                            	
+                                <div class="panel-heading">
+                                    <h4>
+                                        <span>vitale Daten</span>
+                                    </h4>
+                                </div>
+                                <div class="panel-body noPad">
+                                    <table id="patientVitalSigns" class="dynamicTable display table table-bordered table-striped table-condensed">
+                                        <thead>
+                                          <tr>
+                                            <th>Datum/Zeit</th>
+                                            <th>Sign</th>
+                                            <th>Wert</th>
+                                            <th>Notiz</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in vitalSigns %}
+	                                        <tr>
+                                            <td>{{ item.time|date("d.m.Y H:i") }}</td>
+                                            <td>{{ item.sign_name }}</td>
+                                            <td>{{ item.value }}</td>
+                                            <td>{{ item.note }}</td>
+                                          </tr>
+	                                    {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    
+                                    
+                                </div>
+
+                            </div><!-- End .panel -->
+
+                        </div><!-- End .span6 -->
+                        
+                        <div class="col-lg-6">                            
+                            <div class="panel panel-default">
+                            	
+                                <div class="panel-heading">
+                                    <h4>
+                                        <span>Graph</span>
+                                    </h4>
+                                </div>
+                                <div class="panel-body noPad">
+                                	<ul id="myTab" class="nav nav-tabs">
+	                                    <li class="active"><a href="#temp" data-toggle="tab">Temperatur</a></li>
+	                                    <li><a href="#puls" data-toggle="tab">Puls</a></li>
+	                                    <li><a href="#blut" data-toggle="tab">Blutdruck</a></li>
+	                                </ul>
+	                                <div class="tab-content">
+	                                    <div class="tab-pane fade in active" id="temp">
+	                                        <div class="temp chart" data-patient-id="{{ patient.patientID }}" style="height: 230px; width:100%;"></div>
+	                                    </div>
+	                                    <div class="tab-pane fade" id="puls">
+	                                        <div class="puls chart" data-patient-id="{{ patient.patientID }}" style="height: 230px; width:100%;"></div>
+	                                    </div>
+	                                    <div class="tab-pane fade" id="blut">
+	                                        <div class="blutdruck chart" data-patient-id="{{ patient.patientID }}" style="height: 230px; width:100%;"></div>
+	                                    </div>
+	                                </div>
+                                </div>
+
+                            </div><!-- End .panel -->
+
+                        </div><!-- End .span6 -->
+
+                    </div><!-- End .row -->
+                    
+                    
+                    <div class="row">
+
+                        <div class="col-lg-6">                            
+                            <div class="panel panel-default">
+                            	
+                                <div class="panel-heading">
+                                    <h4>
+                                        <span>Medikamente</span>
+                                    </h4>
+                                </div>
+                                <div class="panel-body noPad">
+                                    <table id="patientMedicaments" class="dynamicTable display table table-bordered table-striped table-condensed">
+                                        <thead>
+                                          <tr>
+                                            <th>Datum/Zeit</th>
+                                            <th>Medikament</th>
+                                            <th>Anzahl</th>
+                                            <th>Pflegerin</th>
+                                            <th>Arzt</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in medicaments %}
+	                                        <tr>
+                                            <td>{{ item.time|date("d.m.Y H:i") }}</td>
+                                            <td>{{ item.medicament_name }}</td>
+                                            <td>{{ item.quantity }} {{ item.unit }}</td>
+                                            <td>{{ item.pfeger_vorname }} {{ item.pfeger_name }}</td>
+                                            <td>{{ item.arzt_vorname }} {{ item.arzt_name }}</td>
+                                          </tr>
+	                                    {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    
+                                    
+                                </div>
+
+                            </div><!-- End .panel -->
+
+                        </div><!-- End .span6 -->
+
+                    </div><!-- End .row -->
+
+                
+                
+            </div><!-- End contentwrapper -->
+        </div><!-- End #content -->
+    
+    </div><!-- End #wrapper -->

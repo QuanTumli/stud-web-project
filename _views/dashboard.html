@@ -1,0 +1,149 @@
+
+
+        <!--Body content-->
+        <div id="content" class="clearfix">
+            <div class="contentwrapper"><!--Content wrapper-->
+
+                <div class="heading">
+
+                    <h3>Dashboard</h3>                    
+
+                    <ul class="breadcrumb">
+                        <li>Sie befinden sich hier:</li>
+                        <li class="active">Dashboard</li>
+                    </ul>
+
+                </div><!-- End .heading-->
+
+                <!-- Build page from here: -->
+                <div class="row">
+                        <div class="col-lg-6">
+                            <div class="panel panel-default">
+
+                                <div class="panel-heading">
+
+                                    <h4>
+                                        <span>Willkommen!</span>
+                                    </h4>
+                                </div>
+                                <div class="panel-body">
+                                    <blockquote>
+                                      <p>Hallo "{{ user.firstname }} {{ user.name }}".<br>Hier können Sie die Patienten verwalten.</p>
+                                      <small>Jonas Mosimann</small>
+                                    </blockquote>
+                                </div>
+
+                            </div><!-- End .panel -->
+                        </div><!-- End .span6 -->
+                        
+                        <div class="col-lg-6">
+                            <div class="panel panel-default">
+
+                                <div class="panel-heading">
+
+                                    <h4>
+                                        <span class="icon16 icomoon-icon-power"></span>
+                                        <span>Übersicht</span>
+                                    </h4>
+                                    
+                                </div>
+                                <div class="panel-body">
+
+		                            <div class="centerContent">
+		                                <ul class="bigBtnIcon">
+		                                    <li>
+		                                        <a href="patients">
+		                                            <span class="icon icomoon-icon-support"></span>
+		                                            <span class="txt">Patienten</span>
+		                                            <span class="notification">{{ patients.count }}</span>
+		                                        </a>
+		                                    </li>
+		                                    <li>
+		                                        <a href="patients">
+		                                            <span class="icon icomoon-icon-male"></span>
+		                                            <span class="txt">Mann</span>
+		                                            <span class="notification">{{ patients.male }}</span>
+		                                        </a>
+		                                    </li>
+		                                     <li>
+		                                        <a href="patients">
+		                                            <span class="icon icomoon-icon-female"></span>
+		                                            <span class="txt">Frau</span>
+		                                            <span class="notification">{{ patients.female }}</span>
+		                                        </a>
+		                                    </li>
+		                                </ul>
+		                                
+		                                
+		                            </div><!-- End .centerContent -->
+                                </div><!-- End .panel-body -->
+                            </div><!-- End .panel -->
+
+                        </div><!-- End .span6 -->
+						 
+                    </div><!-- End .row -->
+                    
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="panel panel-default gradient">
+
+                                <div class="panel-heading">
+
+                                    <h4>
+                                        <span class="icon16 icomoon-icon-power"></span>
+                                        <span>Letzte Vitalwerte</span>
+                                    </h4>
+                                    
+                                </div>
+                                <div class="panel-body noPad">
+                                    <ul class="activity">
+                                    	{% for item in vitalSigns %}
+                                    	<li>
+                                            <span class="icon16 icomoon-icon-plus gray"></span>
+                                            <a href="patients?id={{ item.patientID }}"><strong>{{ item.first_name }} {{ item.name }}</strong></a> {{ item.sign_name }}: {{ item.value }}
+                                            <small>{{ item.time|date("d.m.Y H:i") }}</small>
+                                        </li>
+                                    	{% endfor %}
+                                        
+                                    </ul>
+                                </div><!-- End .panelBody -->
+
+                            </div><!-- End .panel -->
+
+                        </div><!-- End .span6 -->
+                        
+                        <div class="col-lg-6">
+                            <div class="panel panel-default gradient">
+
+                                <div class="panel-heading">
+
+                                    <h4>
+                                        <span class="icon16 icomoon-icon-power"></span>
+                                        <span>Letzte Medikamente</span>
+                                    </h4>
+                                    
+                                </div>
+                                <div class="panel-body noPad">
+                                    <ul class="activity">
+                                    	{% for item in medicaments %}
+                                    	<li>
+                                            <span class="icon16 icomoon-icon-plus gray"></span>
+                                            <a href="patients?id={{ item.patientID }}"><strong>{{ item.vorname }} {{ item.name }}</strong></a> hat <b>{{ item.quantity }} {{ item.unit }} {{ item.medicament_name }}</b> genommen.
+                                            <small>{{ item.time|date("d.m.Y H:i") }}</small>
+                                        </li>
+                                    	{% endfor %}
+                                        
+                                    </ul>
+                                </div><!-- End .panelBody -->
+
+                            </div><!-- End .panel -->
+
+                        </div><!-- End .span6 -->
+                        
+                        
+                    </div><!-- End .row -->
+                
+            </div><!-- End contentwrapper -->
+        </div><!-- End #content -->
+    
+    </div><!-- End #wrapper -->

@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{{ appname }} admin</title>
+
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Force IE9 to render in normla mode -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Le styles -->
+    <link href="css/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link href="css/supr-theme/jquery.ui.supr.css" rel="stylesheet" type="text/css"/>
+    <link href="css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="plugins/forms/uniform/uniform.default.css" type="text/css" rel="stylesheet" />
+
+    <!-- Main stylesheets -->
+    <link href="css/main.css" rel="stylesheet" type="text/css" /> 
+    <link href="css/custom.css" rel="stylesheet" type="text/css" /> 
+
+    <!--[if IE 8]><link href="css/ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+    
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script type="text/javascript" src="js/libs/excanvas.min.js"></script>
+      <script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <script type="text/javascript" src="js/libs/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="images/favicon.ico" />
+
+    <script type="text/javascript" src="js/libs/modernizr.js"></script>
+
+    </head>
+      
+    <body class="loginPage">
+
+    <div class="container">
+
+        <div id="header">
+
+            <div class="row">
+
+                <div class="navbar">
+                    <div class="container">
+                        <a class="navbar-brand" href="dashboard">{{ appname }} <span class="slogan">admin</span></a>
+                    </div>
+                </div><!-- /navbar -->
+
+            </div><!-- End .row -->
+
+        </div><!-- End #header -->
+
+    </div><!-- End .container -->    
+
+    <div class="container">
+
+        <div class="loginContainer">
+        	<img src="images/BFH_Logo.jpg" alt="Patient admin"/>
+        	<div id="loginMessage" class="alert alert-danger">
+                <p></p>
+            </div>
+            <form class="form-horizontal" method="post" action="./" id="loginForm" role="form" >
+                <div class="form-group">
+                    <label class="col-lg-12 control-label" for="username">Name:</label>
+                    <div class="col-lg-12">
+                        <input id="username" type="text" name="username" class="form-control" placeholder="Name">
+                        <span class="icon16 icomoon-icon-user right gray marginR10"></span>
+                    </div>
+                </div><!-- End .form-group  -->
+                <div class="form-group">
+                    <label class="col-lg-12 control-label" for="password">Passwort:</label>
+                    <div class="col-lg-12">
+                        <input id="password" type="password" name="password" class="form-control">
+                        <span class="icon16 icomoon-icon-lock right gray marginR10"></span>
+                    </div>
+                </div><!-- End .form-group  -->
+                <div class="form-group">
+                    <div class="col-lg-12 clearfix form-actions">
+                        <button type="submit" class="btn btn-info right" id="loginBtn"><span class="icon16 icomoon-icon-enter white"></span> Login</button>
+                    </div>
+                </div><!-- End .form-group  -->
+            </form>
+        </div>
+
+    </div><!-- End .container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <script  type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap/bootstrap.js"></script>  
+    <script type="text/javascript" src="plugins/forms/validate/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="plugins/forms/uniform/jquery.uniform.min.js"></script>
+
+     <script type="text/javascript">
+        // document ready function
+        $(document).ready(function() {
+            
+            $("input, textarea, select").not('.nostyle').uniform();
+            $("#loginForm").validate({
+                rules: {
+                    username: {
+                        required: true,
+                        minlength: 4
+                    },
+                    password: {
+                        required: true,
+                        minlength: 4
+                    }  
+                },
+                messages: {
+                    username: {
+                        required: "Bitte einen Namen eingeben!",
+                        minlength: "Name zu kurz..."
+                    },
+                    password: {
+                        required: "Bitte ein Passwort eingeben!",
+                        minlength: "Passwort ist zu kurz..."
+                    }
+                },
+                submitHandler: function() {
+				    formSubmit();
+				}   
+            });
+            
+            function formSubmit(){
+	            $.ajax({
+					type : 'POST',
+					url : '_modals/performLogin.php',
+					data: {
+						username : $( '#username' ).val(),
+						password : $( '#password' ).val()
+					},
+					success: function(data){
+						if(data == 'OK'){
+							document.location = './';
+						}else{
+							$( '#loginMessage' ).children('p').html(data);
+							$( '#loginMessage' ).css( 'visibility', 'visible' ).slideDown(800, function(){
+								setTimeout(function(){ 
+									jQuery( '#loginMessage' ).slideUp(800).css( 'visibility','hidden' ); 
+								}, 6000);
+							});
+						}
+					}
+				});
+            }
+            
+        });
+    </script> 
+    </body>
+</html>

@@ -1,0 +1,76 @@
+        <!--Body content-->
+        <div id="content" class="clearfix">
+            <div class="contentwrapper"><!--Content wrapper-->
+
+                <div class="heading">
+
+                    <h3>Patienten</h3>
+                    
+                    <ul class="breadcrumb">
+                        <li>Sie befinden sich hier:</li>
+                        <li>
+                            <a href="dashboard" class="tip" title="Zurück zu Dashboard">
+                                <span class="icon16 icomoon-icon-screen-2"></span>
+                            </a> 
+                            <span class="divider">
+                                <span class="icon16 icomoon-icon-arrow-right-3"></span>
+                            </span>
+                        </li>
+                        <li class="active">Patienten</li>
+                    </ul>
+
+                </div><!-- End .heading-->
+					
+                    <div class="row">
+
+                        <div class="col-lg-12">                            
+                            <div class="panel panel-default">
+                            	<div id="alertMessage" class="alert hide">
+									<button type="button" class="close" data-dismiss="alert">×</button>
+		                            <p></p>
+		                        </div>
+		                        
+                                <div class="panel-heading">
+                                    <h4>
+                                        <span>Alle Patienten</span>
+                                    </h4>
+                                </div>
+                                <div class="panel-body noPad">
+                                    <table class="dynamicTable display table table-bordered table-striped table-condensed">
+                                        <thead>
+                                          <tr>
+                                            <th>MRN</th>
+                                            <th>Vorname</th>
+                                            <th>Nachname</th>
+                                            <th>Geschlecht</th>
+                                            <th>Geburtsdatum</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in results %}
+	                                        <tr>
+	                                        <td><a href="?id={{ item.patientID }}"><span class="icon16 icomoon-icon-search-2"></span> {{ item.MRN }}</a></td>
+                                            <td>{{ item.first_name }}</td>
+                                            <td>{{ item.name }}</td>
+                                            <td>{% if item.gender == 1 %} <span class="icon icomoon-icon-male"></span> Mann {% else %} <span class="icon icomoon-icon-female"></span>Frau {% endif %}</td>
+                                            <td>{{ item.birthdate|date("d.m.Y") }}</td>
+                                          </tr>
+	                                    {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    
+                                    
+                                </div>
+
+                            </div><!-- End .panel -->
+
+                        </div><!-- End .span6 -->
+
+                    </div><!-- End .row -->
+               
+                <!-- Page end here -->
+                                    
+            </div><!-- End contentwrapper -->
+        </div><!-- End #content -->
+    
+    </div><!-- End #wrapper -->

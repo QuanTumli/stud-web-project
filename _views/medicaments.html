@@ -1,0 +1,100 @@
+        <!--Body content-->
+        <div id="content" class="clearfix">
+            <div class="contentwrapper"><!--Content wrapper-->
+
+                <div class="heading">
+
+                    <h3>Medikamente</h3>
+                    
+                    <ul class="breadcrumb">
+                        <li>Sie befinden sich hier:</li>
+                        <li>
+                            <a href="dashboard" class="tip" title="Zurück zu Dashboard">
+                                <span class="icon16 icomoon-icon-screen-2"></span>
+                            </a> 
+                            <span class="divider">
+                                <span class="icon16 icomoon-icon-arrow-right-3"></span>
+                            </span>
+                        </li>
+                        <li class="active">Medikamente</li>
+                    </ul>
+
+                </div><!-- End .heading-->
+					
+                    <div class="row">
+
+                        <div class="col-lg-6">                            
+                            <div class="panel panel-default">
+		                        
+                                <div class="panel-heading">
+                                    <h4>
+                                        <span>Alle Medikamente</span>
+                                    </h4>
+                                </div>
+                                <div class="panel-body noPad">
+                                    <table class="dynamicTable display table table-bordered table-striped table-condensed">
+                                        <thead>
+                                          <tr>
+                                            <th>Medikament</th>
+                                            <th>Unit</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in results %}
+	                                        <tr>
+	                                        <td>{{ item.medicament_name }}</td>
+                                            <td>{{ item.unit }}</td>
+                                          </tr>
+	                                    {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    
+                                    
+                                </div>
+
+                            </div><!-- End .panel -->
+
+                        </div><!-- End .span6 -->
+                        
+                        <div class="col-lg-6">
+						
+                        <div class="page-header">
+                            <h4>Neues Medikament erfassen</h4>
+                        </div>
+						
+						<div id="alertMessage" class="alert hide">
+							<button type="button" class="close" data-dismiss="alert">×</button>
+                            <p></p>
+                        </div>
+                        
+                        <form class="form-horizontal" role="form" id="newMediForm">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" for="name">Name</label>
+                                <div class="col-lg-9">
+                                   <input type="text" id="name" name="name" class="form-control uniform-input text" required="required">
+                                </div>
+                            </div><!-- End .form-group  -->
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" for="unit">Unit</label>
+                                <div class="col-lg-9">
+                                   <input type="text" id="unit" name="unit" class="form-control uniform-input text" required="required">
+                                   <span class="help-block blue">mg / dose / ...</span>
+                                </div>
+                            </div><!-- End .form-group  -->
+                            <div class="form-group">
+                                <div class="col-lg-offset-3 col-lg-9">
+                                    <button type="submit" class="btn btn-info">Speichern</button>
+                                </div>
+                            </div><!-- End .form-group  -->
+                        </form>
+                                              
+                    </div><!-- End .span6 -->
+
+                    </div><!-- End .row -->
+               
+                <!-- Page end here -->
+                                    
+            </div><!-- End contentwrapper -->
+        </div><!-- End #content -->
+    
+    </div><!-- End #wrapper -->

@@ -1,0 +1,38 @@
+﻿/* ------------------Put your custom code here--------------------*/
+
+.loginContainer img{
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+#sidebar.fixed{
+	overflow: auto;
+	height: 100%;
+	padding-bottom: 67px;
+}
+
+.navbar .navbar-brand {
+	margin-right: 0;
+}
+
+.dropdown-menu .menu{
+	min-width: 200px;
+}
+
+#loginMessage{
+	visibility: hidden;
+	display: none;
+}
+
+.panel{
+	min-height: 0;
+}
+
+.form-group p{
+	padding-top: 7px;
+}
+
+.responsive table{
+	min-width: 0;
+}
